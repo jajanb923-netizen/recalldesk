@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RecallDesk — Never Solve It Twice</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1>RecallDesk</h1>
+    <p class="tag">Never solve it twice — a support team that shares one memory.</p>
+  </div>
+  <div id="health" class="pill">Connecting to Meko…</div>
+</header>
+
+<main>
+  <section class="card" id="demo">
+    <h2>Guided demo — the proof in two tickets</h2>
+    <ol class="steps">
+      <li><b>Seed the desk.</b> Three runbooks go into Meko's knowledge base. No fixes remembered yet. <button id="btn-seed">1 · Seed demo data</button> <span id="seed-status" class="muted"></span></li>
+      <li><b>Ticket #1 — cold solve.</b> "Login page times out on slow network". No memory hit: the resolver solves it from the runbook, saves the fix as a memory, and a reviewer approves it for promotion. <button id="btn-t1">2 · Run ticket #1</button></li>
+      <li><b>Promote the fix</b> (human gate) so it becomes shared knowledge. <button id="btn-promote" disabled>3 · Promote fix to shared knowledge</button></li>
+      <li><b>Ticket #2 — same issue, new words, new agent.</b> "Users can't sign in — the login screen just hangs". The triage agent finds yesterday's fix in shared memory and answers without re-solving. <button id="btn-t2">4 · Run ticket #2</button></li>
+    </ol>
+    <p class="muted">Every step below is a real Meko call (context_search, memory, knowledge base, conversations, artifacts) and a real Groq model call. Nothing is canned.</p>
+  </section>
+
+  <section class="card">
+    <h2>New ticket</h2>
+    <form id="ticket-form">
+      <input id="f-title" required maxlength="140" placeholder="Ticket title — e.g. Dashboard counts don't refresh after changing filters">
+      <textarea id="f-body" rows="2" maxlength="600" placeholder="Details (optional) — what the customer sees"></textarea>
+      <input id="f-reporter" maxlength="40" placeholder="Reporter (optional)">
+      <button type="submit">Run the agent team</button>
+    </form>
+    <p id="form-status" class="muted"></p>
+  </section>
+
+  <div class="cols">
+    <section class="card">
+      <h2>Tickets</h2>
+      <ul id="ticket-list" class="tickets"><li class="muted">No tickets yet.</li></ul>
+    </section>
+
+    <section class="card">
+      <h2>Shared memory <span class="muted" id="mem-count"></span></h2>
+      <div id="metrics" class="metrics muted">Load the desk to see token savings.</div>
+      <h3>Memories</h3>
+      <ul id="memory-list" class="mems"><li class="muted">—</li></ul>
+      <h3>Promotion queue</h3>
+      <ul id="promo-list" class="mems"><li class="muted">Nothing waiting for promotion.</li></ul>
+      <button id="btn-refresh-mem">Refresh memory panel</button>
+    </section>
+  </div>
+
+  <section class="card" id="detail" hidden>
+    <h2 id="d-title"></h2>
+    <p><span id="d-badge" class="badge"></span> <span id="d-meta" class="muted"></span></p>
+    <h3>Agent answer</h3>
+    <pre id="d-answer" class="answer"></pre>
+    <h3>Decision trace — every step is stored in Meko</h3>
+    <ol id="d-trace" class="trace"></ol>
+    <h3>Tokens</h3>
+    <div id="d-tokens"></div>
+  </section>
+</main>
+
+<footer>
+  <p class="muted">RecallDesk · ContextCon 2026 · Theme 02 “Never Solve It Twice” · Context layer: Meko (YugabyteDB) via MCP · Model: Groq gpt-oss-20b · <a href="https://github.com/jajanb923-netizen/recalldesk">Source on GitHub</a></p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
